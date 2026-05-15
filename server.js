@@ -1,19 +1,42 @@
 const express = require("express");
 const cors = require("cors");
+const mongoose = require("mongoose");
 
 const app = express();
 
-app.use(cors());
+app.use(cors({
+  origin: "https://login-frontend-psi-ashen.vercel.app"
+}));
 app.use(express.json());
 
-app.post("/login", (req, res) => {
+mongoose.connect(
+  "mongodb://anju:anju2003@ac-5fsvu8u-shard-00-00.ieorzq5.mongodb.net:27017,ac-5fsvu8u-shard-00-01.ieorzq5.mongodb.net:27017,ac-5fsvu8u-shard-00-02.ieorzq5.mongodb.net:27017/?ssl=true&replicaSet=atlas-9u3h77-shard-0&authSource=admin&appName=Cluster0"
+)
+.then(() => {
+  console.log("MongoDB Connected");
+})
+.catch((err) => {
+  console.log(err);
+});
+
+const userSchema = new mongoose.Schema({
+  email: String,
+  password: String,
+});
+
+const User = mongoose.model("User", userSchema);
+
+app.post("/login", async (req, res) => {
 
   const { email, password } = req.body;
 
-  if (
-    email === "anju@gmail.com" &&
-    password === "12345"
-  ) {
+  const user = await User.findOne({
+    email,
+    password,
+  });
+
+  if (user) {
+
     res.json({
       success: true,
       message: "Login Successful"
@@ -28,6 +51,8 @@ app.post("/login", (req, res) => {
   }
 });
 
-app.listen(5000, () => {
-  console.log("Server Started");
+const PORT = process.env.PORT || 5000;
+
+app.listen(PORT, () => {
+  console.log("Server Started on port " + PORT);
 });
