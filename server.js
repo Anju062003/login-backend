@@ -4,9 +4,7 @@ const mongoose = require("mongoose");
 
 const app = express();
 
-app.use(cors({
-  origin: "https://login-frontend-psi-ashen.vercel.app"
-}));
+app.use(cors());
 app.use(express.json());
 
 mongoose.connect(
