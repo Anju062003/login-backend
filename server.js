@@ -10,7 +10,7 @@ app.use(cors({
 app.use(express.json());
 
 mongoose.connect(
-  "mongodb://anju:anju2003@ac-5fsvu8u-shard-00-00.ieorzq5.mongodb.net:27017,ac-5fsvu8u-shard-00-01.ieorzq5.mongodb.net:27017,ac-5fsvu8u-shard-00-02.ieorzq5.mongodb.net:27017/?ssl=true&replicaSet=atlas-9u3h77-shard-0&authSource=admin&appName=Cluster0"
+  "mongodb+srv://anju:anju2003@cluster0.ieorzq5.mongodb.net/?appName=Cluster0"
 )
 .then(() => {
   console.log("MongoDB Connected");
