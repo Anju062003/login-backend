@@ -50,6 +50,22 @@ app.post("/login", async (req, res) => {
     });
   }
 });
+app.post("/register", async (req, res) => {
+
+  const { email, password } = req.body;
+
+  const newUser = new User({
+    email,
+    password
+  });
+
+  await newUser.save();
+
+  res.json({
+    success: true,
+    message: "User Registered"
+  });
+});
 
 const PORT = process.env.PORT || 5000;
 
